@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.1</version>
+        <version>3.4.12</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.codewithmosh</groupId>
@@ -27,9 +27,15 @@
         <url/>
     </scm>
     <properties>
-        <java.version>23</java.version>
+        <java.version>25.0.1</java.version>
     </properties>
     <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -62,9 +68,16 @@
             <groupId>org.flywaydb</groupId>
         </dependency>
         <dependency>
-            <artifactId>lombok</artifactId>
             <groupId>org.projectlombok</groupId>
-            <scope>annotationProcessor</scope>
+            <artifactId>lombok</artifactId>
+            <version>1.18.42</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.cdimascio</groupId>
+            <artifactId>dotenv-java</artifactId>
+            <version>3.2.0</version>
         </dependency>
 
 
@@ -75,13 +88,28 @@
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
-                <version>10.15.0</version>
                 <configuration>
                     <url>jdbc:mysql://localhost:3306/store_api?createDatabaseIfNotExist=true</url>
                     <user>root</user>
                     <password>MyPassword!</password>
                     <cleanDisabled>false</cleanDisabled>
                 </configuration>
+            </plugin>
+
+            <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId> 
+            <configuration>
+                <source>25</source>
+                <target>25</target>
+                <annotationProcessorPaths>
+                    <path>
+                        <groupId>org.projectlombok</groupId>
+                        <artifactId>lombok</artifactId>
+                        <version>1.18.42</version> 
+                    </path>
+                </annotationProcessorPaths>
+            </configuration>
             </plugin>
 
             <plugin>
