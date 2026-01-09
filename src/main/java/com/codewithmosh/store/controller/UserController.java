@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codewithmosh.store.dtos.UserDto;
-import com.codewithmosh.store.entities.User;
 import com.codewithmosh.store.repositories.UserRepository;
 
 import lombok.AllArgsConstructor;
@@ -27,11 +26,13 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable Long id) {
+    public ResponseEntity<UserDto> getUser(@PathVariable Long id) {
         var user =  userRepository.findById(id).orElse(null);
         if (user == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(user);
+
+        var userDto = new UserDto(user.getId(), user.getName(), user.getEmail());
+        return ResponseEntity.ok(userDto);
     } 
 }
