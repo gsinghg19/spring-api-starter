@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.codewithmosh.store.dtos.UserDto;
 import com.codewithmosh.store.entities.User;
 import com.codewithmosh.store.repositories.UserRepository;
 
@@ -18,8 +19,11 @@ public class UserController {
     private final UserRepository userRepository;
     
     @GetMapping
-    public Iterable<User> getAllUsers() {
-       return userRepository.findAll();
+    public Iterable<UserDto> getAllUsers() { // Dto's (Data trasnfer objects are the input and output of our app.)
+       return userRepository.findAll()
+       .stream()
+       .map(user -> new UserDto(user.getId(), user.getName(), user.getEmail()))
+       .toList();
     }
 
     @GetMapping("/{id}")
